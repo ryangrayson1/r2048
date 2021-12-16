@@ -51,18 +51,22 @@ void keyPressed(){
     switch(keyCode){
       case UP:
         player.moveUp();
+        player.printGrid();
         //player.addTile();
         break;
       case DOWN:
         player.moveDown();
+        player.printGrid();
         //player.addTile();
         break;
       case LEFT:
         player.moveLeft();
+        player.printGrid();
         //player.addTile();
         break;
       case RIGHT:
         player.moveRight();
+        player.printGrid();
         //player.addTile();
         break;
     }
