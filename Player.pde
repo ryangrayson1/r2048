@@ -17,11 +17,11 @@ public class Player {
         available.add(new PVector(i, j));
       }
     }
+    
+    //creating first 2 tiles
+    this.addTile();
+    this.addTile();
         
-  }
-  
-  public ArrayList<PVector> getAvailable(){
-    return available;
   }
   
   public void addTile(){
@@ -34,7 +34,7 @@ public class Player {
     grid[(int)newSpot.x][(int)newSpot.y] = new Tile((int)newSpot.x, (int)newSpot.y);
   }
  
- public void showTiles(){
+ public void displayTiles(){
    for (int i = 0; i < 4; i++){
       for(int j = 0; j < 4; j++){
         if (grid[i][j] != null){
@@ -93,12 +93,23 @@ public class Player {
      }
        
    }
+   
+   updateAvail();
  }
    
-   
-   public void updateAvail(){
-   }
+ public void moveDown(){
  }
+ 
+ public void moveLeft(){
+ }
+ 
+ public void moveRight(){
+ }
+   
+ public void updateAvail(){
+ }
+ 
+}
  
  
  
