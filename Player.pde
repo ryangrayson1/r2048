@@ -107,6 +107,17 @@ public class Player {
  }
    
  public void updateAvail(){
+   available.clear();
+   
+   for (int i = 0; i < 4; i++){
+     
+      for(int j = 0; j < 4; j++){
+        
+        if (grid[i][j] != null){
+          available.add(new PVector(i, j);
+        }
+      }
+   }
  }
  
 }
