@@ -93,8 +93,69 @@ public class Player {
      }
        
    }
+   //merging tiles
+   this.mergeUp();
    
    updateAvail();
+ }
+ 
+ //merging tiles up after they have moved
+ public void mergeUp(){
+   for(int i = 0; i < 4; i++){
+     
+     //double merge case
+     if (grid[i][0] != null && grid[i][1] != null && grid[i][2] != null && grid[i][3] != null && grid[i][0].getValue() == grid[i][1].getValue() && grid[i][2].getValue() == grid[i][3].getValue()){
+       grid[i][0].nextValue();
+       
+       grid[i][1] = grid[i][2];
+       grid[i][1].setPosition(i, 1);
+       grid[i][1].nextValue();
+       
+       grid[i][2] = null;
+       grid[i][3] = null;  
+     }
+       
+     //3 single merge cases
+     //merge top 2
+     else if (grid[i][0] != null && grid[i][1] != null && grid[i][0].getValue() == grid[i][1].getValue()){
+       grid[i][0].nextValue();
+       
+       if (grid[i][2] == null && grid[i][3] == null){
+         grid[i][1] = null;
+       }
+       else if (grid[i][2] != null){
+         grid[i][1] = grid[i][2];
+         grid[i][1].setPosition(i, 1);
+         
+         if (grid[i][3] == null){
+           grid[i][2] = null;
+         }
+         else{
+           grid[i][2] = grid[i][3];
+           grid[i][2].setPosition(i, 2);
+           grid[i][3] = null;
+         }
+       }
+     }
+     //merge middle 2
+     else if (grid[i][1] != null && grid[i][2] != null && grid[i][1].getValue() == grid[i][2].getValue()){
+       grid[i][1].nextValue();
+       
+       if (grid[i][3] == null){
+         grid[i][2] = null;
+       }
+       else{
+         grid[i][2] = grid[i][3];
+         grid[i][2].setPosition(i, 2);
+         grid[i][3] = null;
+       }
+     }
+     //merge bottom 2
+     else if (grid[i][2] != null && grid[i][3] != null && grid[i][2].getValue() == grid[i][3].getValue()){
+       grid[i][2].nextValue();
+       grid[i][3] = null;
+     }
+   }
  }
    
 //MOVE DOWN ------------------------------------------------------------------------------------------------------------
@@ -157,7 +218,6 @@ public class Player {
 //MOVE RIGHT ------------------------------------------------------------------------------------------------------------
  public void moveRight(){
  }
-   
    
  public void updateAvail(){
    available.clear();

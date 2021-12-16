@@ -17,9 +17,18 @@ public class Tile {
     this.coords = pixCoords(x, y);
   }
   
+  public int getValue(){
+    return value;
+  }
+  
   public void setValue(int val){
     this.value = val;
     this.clr = new PVector(100, val % 255, 100);
+  }
+  
+  public void nextValue(){
+    this.value *= 2;
+    this.clr = new PVector(100, this.value % 255, 100);
   }
   
   public void setPosition(int x, int y){
