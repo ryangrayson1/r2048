@@ -31,4 +31,15 @@ void draw(){
   
   //will continuously show the tiles
   player.showTiles();
+  
 }
+
+void keyPressed(){
+  if (keyCode == UP){
+    player.moveUp();
+  }
+}
+    
+    
+    
+    

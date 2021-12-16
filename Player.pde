@@ -48,7 +48,7 @@ public class Player {
  public void moveUp(){
    //2nd row
    for(int i = 0; i < 4; i++){
-     if (grid[i][0] == null){
+     if (grid[i][0] == null && grid[i][1] != null){
        grid[i][1].setPosition(i, 0);
        grid[i][0] = grid[i][1];
        grid[i][1] = null;
@@ -58,20 +58,46 @@ public class Player {
    //3rd row
    for(int i = 0; i < 4; i++){
      //moving up 2 case
-     if (grid[i][0] == null && grid[i][1] == null){
+     if (grid[i][0] == null && grid[i][1] == null && grid[i][2] != null){
        grid[i][2].setPosition(i, 0);
        grid[i][0] = grid[i][2];
        grid[i][2] = null;
      }
      //moving up 1
-     else {
+     else if (grid[i][2] != null){
        grid[i][2].setPosition(i, 1);
        grid[i][1] = grid[i][2];
        grid[i][2] = null;
      }
+   }
      
      //4th row
-     
+     for(int i = 0; i < 4; i++){
+     //moving up 3 case
+     if (grid[i][0] == null && grid[i][1] == null && grid[i][2] == null && grid[i][3] != null){
+       grid[i][3].setPosition(i, 0);
+       grid[i][0] = grid[i][3];
+       grid[i][3] = null;
+     }
+     //moving up 1 case
+     else if ((grid[i][0] == null && grid[i][1] == null || grid[i][0] == null && grid[i][2] == null || grid[i][1] == null && grid[i][2] == null) && grid[i][3] != null){
+       grid[i][3].setPosition(i, 2);
+       grid[i][2] = grid[i][3];
+       grid[i][3] = null;
+     }
+     //moving up 2
+     else if (grid[i][3] != null){
+       grid[i][3].setPosition(i, 1);
+       grid[i][1] = grid[i][3];
+       grid[i][3] = null;
+     }
+       
+   }
+ }
+   
+   
+   public void updateAvail(){
+   }
  }
  
  
@@ -81,9 +107,5 @@ public class Player {
  
  
  
- 
- 
- 
- 
-}
+
  
