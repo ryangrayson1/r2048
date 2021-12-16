@@ -51,15 +51,19 @@ void keyPressed(){
     switch(keyCode){
       case UP:
         player.moveUp();
+        //player.addTile();
         break;
       case DOWN:
         player.moveDown();
+        //player.addTile();
         break;
       case LEFT:
         player.moveLeft();
+        //player.addTile();
         break;
       case RIGHT:
         player.moveRight();
+        //player.addTile();
         break;
     }
   }
