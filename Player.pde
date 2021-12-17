@@ -24,14 +24,23 @@ public class Player {
         
   }
   
+  public ArrayList<PVector> getAvailable(){
+    return this.available;
+  }
+  
   public void addTile(){
-    //getting a random available space and making that space unavailable
-    int r = (int) random(available.size());
-    PVector newSpot = available.get(r);
-    available.remove(r);
-    
-    //updating grid
-    grid[(int)newSpot.x][(int)newSpot.y] = new Tile((int)newSpot.x, (int)newSpot.y);
+     if (available.size() == 0){
+       gameActive = false;
+     }
+     else{
+      //getting a random available space and making that space unavailable
+      int r = (int) random(available.size());
+      PVector newSpot = available.get(r);
+      available.remove(r);
+      
+      //updating grid
+      grid[(int)newSpot.x][(int)newSpot.y] = new Tile((int)newSpot.x, (int)newSpot.y);
+    }
   }
  
  public void displayTiles(){
@@ -94,7 +103,7 @@ public class Player {
        
    }
    //merging tiles
-   //this.mergeUp();
+   this.mergeUp();
    
    updateAvail();
  }
@@ -196,8 +205,8 @@ public class Player {
      }
      //moving down 1 case
      else if (grid[i][3] != null && grid[i][2] != null && grid[i][1] == null && grid[i][0] != null){
-       grid[i][0].setPosition(i, 2);
-       grid[i][2] = grid[i][0];
+       grid[i][0].setPosition(i, 1);
+       grid[i][1] = grid[i][0];
        grid[i][0] = null;
      }
      //moving down 2
