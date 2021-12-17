@@ -23,12 +23,12 @@ public class Tile {
   
   public void setValue(int val){
     this.value = val;
-    this.clr = new PVector(100, val % 255, 100);
+    this.clr = new PVector(val*6 % 200, val % 255, 100);
   }
   
   public void nextValue(){
     this.value *= 2;
-    this.clr = new PVector(100, this.value % 255, 100);
+    this.clr = new PVector(this.value*6 % 200, this.value % 255, 100);
   }
   
   public void setPosition(int x, int y){

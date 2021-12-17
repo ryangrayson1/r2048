@@ -138,8 +138,9 @@ public class Player {
        }
      }
      //merge middle 2
-     else if (grid[i][1] != null && grid[i][2] != null && grid[i][1].getValue() == grid[i][2].getValue()){
+     if (grid[i][1] != null && grid[i][2] != null && grid[i][1].getValue() == grid[i][2].getValue()){
        grid[i][1].nextValue();
+       
        
        if (grid[i][3] == null){
          grid[i][2] = null;

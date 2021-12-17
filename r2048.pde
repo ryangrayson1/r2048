@@ -51,28 +51,32 @@ void keyPressed(){
     switch(keyCode){
       case UP:
         player.moveUp();
+        player.addTile();
         player.printGrid();
-        //player.addTile();
         break;
       case DOWN:
         player.moveDown();
+        player.addTile();
         player.printGrid();
-        //player.addTile();
         break;
       case LEFT:
         player.moveLeft();
+        player.addTile();
         player.printGrid();
-        //player.addTile();
         break;
       case RIGHT:
         player.moveRight();
+        player.addTile();
         player.printGrid();
-        //player.addTile();
         break;
     }
   }
   else if (key == 'q' || key == 'Q'){
     gameActive = false;
+  }
+  else if (!gameActive && (key == 's' || key == 'S')){
+    player = new Player();
+    gameActive = true;
   }
 }
 
