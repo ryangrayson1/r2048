@@ -17,11 +17,11 @@ public class Player {
         available.add(new PVector(i, j));
       }
     }
+    
+    //creating first 2 tiles
+    this.addTile();
+    this.addTile();
         
-  }
-  
-  public ArrayList<PVector> getAvailable(){
-    return available;
   }
   
   public void addTile(){
@@ -34,7 +34,7 @@ public class Player {
     grid[(int)newSpot.x][(int)newSpot.y] = new Tile((int)newSpot.x, (int)newSpot.y);
   }
  
- public void showTiles(){
+ public void displayTiles(){
    for (int i = 0; i < 4; i++){
       for(int j = 0; j < 4; j++){
         if (grid[i][j] != null){
@@ -44,7 +44,7 @@ public class Player {
    }
  }
  
- 
+//MOVE UP ------------------------------------------------------------------------------------------------------------
  public void moveUp(){
    //2nd row
    for(int i = 0; i < 4; i++){
@@ -80,7 +80,7 @@ public class Player {
        grid[i][3] = null;
      }
      //moving up 1 case
-     else if ((grid[i][0] == null && grid[i][1] == null || grid[i][0] == null && grid[i][2] == null || grid[i][1] == null && grid[i][2] == null) && grid[i][3] != null){
+     else if (grid[i][0] != null && grid[i][1] != null && grid[i][2] == null && grid[i][3] != null){
        grid[i][3].setPosition(i, 2);
        grid[i][2] = grid[i][3];
        grid[i][3] = null;
@@ -93,19 +93,274 @@ public class Player {
      }
        
    }
+   //merging tiles
+   this.mergeUp();
+   
+   updateAvail();
+ }
+ 
+ //merging tiles up after they have moved
+ public void mergeUp(){
+   for(int i = 0; i < 4; i++){
+     
+     //double merge case
+     if (grid[i][0] != null && grid[i][1] != null && grid[i][2] != null && grid[i][3] != null && grid[i][0].getValue() == grid[i][1].getValue() && grid[i][2].getValue() == grid[i][3].getValue()){
+       grid[i][0].nextValue();
+       
+       grid[i][2].nextValue();
+       grid[i][2].setPosition(i, 1);
+       grid[i][1] = grid[i][2];
+       
+       grid[i][2] = null;
+       grid[i][3] = null;  
+     }
+       
+     //3 single merge cases
+     //merge top 2
+     else if (grid[i][0] != null && grid[i][1] != null && grid[i][0].getValue() == grid[i][1].getValue()){
+       grid[i][0].nextValue();
+       
+       if (grid[i][2] == null && grid[i][3] == null){
+         grid[i][1] = null;
+       }
+       else if (grid[i][2] != null){
+         grid[i][2].setPosition(i, 1);
+         grid[i][1] = grid[i][2];
+         
+         if (grid[i][3] == null){
+           grid[i][2] = null;
+         }
+         else{
+           grid[i][2] = grid[i][3];
+           grid[i][2].setPosition(i, 2);
+           grid[i][3] = null;
+         }
+       }
+     }
+     //merge middle 2
+     if (grid[i][1] != null && grid[i][2] != null && grid[i][1].getValue() == grid[i][2].getValue()){
+       grid[i][1].nextValue();
+       
+       
+       if (grid[i][3] == null){
+         grid[i][2] = null;
+       }
+       else{
+         grid[i][2] = grid[i][3];
+         grid[i][2].setPosition(i, 2);
+         grid[i][3] = null;
+       }
+     }
+     //merge bottom 2
+     else if (grid[i][2] != null && grid[i][3] != null && grid[i][2].getValue() == grid[i][3].getValue()){
+       grid[i][2].nextValue();
+       grid[i][3] = null;
+     }
+   }
  }
    
+//MOVE DOWN ------------------------------------------------------------------------------------------------------------
+ public void moveDown(){
+   //3rd row
+   for(int i = 0; i < 4; i++){
+     if (grid[i][3] == null && grid[i][2] != null){
+       grid[i][2].setPosition(i, 3);
+       grid[i][3] = grid[i][2];
+       grid[i][2] = null;
+     }
+   }
    
-   public void updateAvail(){
+   //2nd row
+   for(int i = 0; i < 4; i++){
+     //moving down 2 case
+     if (grid[i][3] == null && grid[i][2] == null && grid[i][1] != null){
+       grid[i][1].setPosition(i, 3);
+       grid[i][3] = grid[i][1];
+       grid[i][1] = null;
+     }
+     //moving down 1
+     else if (grid[i][1] != null){
+       grid[i][1].setPosition(i, 2);
+       grid[i][2] = grid[i][1];
+       grid[i][1] = null;
+     }
+   }
+     
+     //1st row
+     for(int i = 0; i < 4; i++){
+     //moving down 3 case
+     if (grid[i][3] == null && grid[i][2] == null && grid[i][1] == null && grid[i][0] != null){
+       grid[i][0].setPosition(i, 3);
+       grid[i][3] = grid[i][0];
+       grid[i][0] = null;
+     }
+     //moving down 1 case
+     else if (grid[i][3] != null && grid[i][2] != null && grid[i][1] == null && grid[i][0] != null){
+       grid[i][0].setPosition(i, 2);
+       grid[i][2] = grid[i][0];
+       grid[i][0] = null;
+     }
+     //moving down 2
+     else if (grid[i][0] != null){
+       grid[i][0].setPosition(i, 2);
+       grid[i][2] = grid[i][0];
+       grid[i][0] = null;
+     }
+       
+   }
+   
+   updateAvail();
+ }
+ 
+//MOVE LEFT ------------------------------------------------------------------------------------------------------------
+ public void moveLeft(){
+    //2nd col
+   for(int i = 0; i < 4; i++){
+     if (grid[0][i] == null && grid[1][i] != null){
+       grid[1][i].setPosition(0, i);
+       grid[0][i] = grid[1][i];
+       grid[1][i] = null;
+     }
+   }
+   
+   //3rd col
+   for(int i = 0; i < 4; i++){
+     //moving left 2 case
+     if (grid[0][i] == null && grid[1][i] == null && grid[2][i] != null){
+       grid[2][i].setPosition(0, i);
+       grid[0][i] = grid[2][i];
+       grid[2][i] = null;
+     }
+     //moving left 1
+     else if (grid[2][i] != null){
+       grid[2][i].setPosition(1, i);
+       grid[1][i] = grid[2][i];
+       grid[2][i] = null;
+     }
+   }
+     
+     //4th col
+     for(int i = 0; i < 4; i++){
+     //moving left 3 case
+     if (grid[0][i] == null && grid[1][i] == null && grid[2][i] == null && grid[3][i] != null){
+       grid[3][i].setPosition(0, i);
+       grid[0][i] = grid[3][i];
+       grid[3][i] = null;
+     }
+     //moving left 1 case
+     else if (grid[0][i] != null && grid[1][i] != null && grid[2][i] == null && grid[3][i] != null){
+       grid[3][i].setPosition(2, i);
+       grid[2][i] = grid[3][i];
+       grid[3][i] = null;
+     }
+     //moving left 2
+     else if (grid[3][i] != null){
+       grid[3][i].setPosition(1, i);
+       grid[1][i] = grid[3][i];
+       grid[3][i] = null;
+     }
+       
+   }
+   //merging tiles
+   //this.mergeLeft();
+   
+   updateAvail();
+ }
+ 
+//MOVE RIGHT ------------------------------------------------------------------------------------------------------------
+ public void moveRight(){
+   //3rd col
+   for(int i = 0; i < 4; i++){
+     if (grid[3][i] == null && grid[2][i] != null){
+       grid[2][i].setPosition(3, i);
+       grid[3][i] = grid[2][i];
+       grid[2][i] = null;
+     }
+   }
+   
+   //2nd col
+   for(int i = 0; i < 4; i++){
+     //moving right 2 case
+     if (grid[3][i] == null && grid[2][i] == null && grid[1][i] != null){
+       grid[1][i].setPosition(3, i);
+       grid[3][i] = grid[1][i];
+       grid[1][i] = null;
+     }
+     //moving right 1
+     else if (grid[1][i] != null){
+       grid[1][i].setPosition(2, i);
+       grid[2][i] = grid[1][i];
+       grid[1][i] = null;
+     }
+   }
+     
+     //1st col
+     for(int i = 0; i < 4; i++){
+     //moving right 3 case
+     if (grid[3][i] == null && grid[2][i] == null && grid[1][i] == null && grid[0][i] != null){
+       grid[0][i].setPosition(3, i);
+       grid[3][i] = grid[0][i];
+       grid[0][i] = null;
+     }
+     //moving right 1 case
+     else if (grid[3][i] != null && grid[2][i] != null && grid[1][i] == null && grid[0][i] != null){
+       grid[0][i].setPosition(1, i);
+       grid[1][i] = grid[0][i];
+       grid[0][i] = null;
+     }
+     //moving right 2
+     else if (grid[0][i] != null){
+       grid[0][i].setPosition(2, i);
+       grid[2][i] = grid[0][i];
+       grid[0][i] = null;
+     }
+       
+   }
+   //merging tiles
+   //this.mergeRight();
+   
+   updateAvail();
+ }
+   
+ public void updateAvail(){
+   available.clear();
+   
+   for (int i = 0; i < 4; i++){
+     
+      for(int j = 0; j < 4; j++){
+        
+        if (grid[i][j] == null){
+          available.add(new PVector(i, j));
+        }
+      }
    }
  }
  
+ public void printGrid(){
+   for(int i = 0; i < 4; i++){
+     for(int j = 0; j < 4; j++){
+       
+       if (grid[j][i] == null){
+         if (j == 0 && i != 0){
+           System.out.println();
+         }
+         System.out.print("_  ");
+         
+       }
+       else{
+         if (j == 0 && i != 0){
+           System.out.println();
+         }
+         System.out.print(grid[j][i].getValue() + "  ");
+       }
+     }
+   }
+   System.out.println("\n\nAvailable: ");
+   for(int i = 0; i < this.available.size(); i++){
+     System.out.print("(" + (int)this.available.get(i).x + ", " + (int)this.available.get(i).y + "), ");
+   }
+   System.out.println("\n\n-------------------\n\n");
+ }
  
  
- 
- 
- 
- 
- 
-
- 
+}
