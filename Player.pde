@@ -217,8 +217,12 @@ public class Player {
      }
        
    }
-   
+   //this.mergeDown();
    updateAvail();
+ }
+ 
+ //merging tiles up after they have moved
+ public void mergeDown(){    
  }
  
 //MOVE LEFT ------------------------------------------------------------------------------------------------------------
