@@ -64,7 +64,7 @@ public class Player {
        grid[i][2] = null;
      }
      //moving up 1
-     else if (grid[i][2] != null){
+     else if (grid[i][2] != null && grid[i][1] == null){
        grid[i][2].setPosition(i, 1);
        grid[i][1] = grid[i][2];
        grid[i][2] = null;
@@ -86,7 +86,7 @@ public class Player {
        grid[i][3] = null;
      }
      //moving up 2
-     else if (grid[i][3] != null){
+     else if (grid[i][3] != null && grid[i][2] == null && grid[i][1] == null){
        grid[i][3].setPosition(i, 1);
        grid[i][1] = grid[i][3];
        grid[i][3] = null;
@@ -94,7 +94,7 @@ public class Player {
        
    }
    //merging tiles
-   this.mergeUp();
+   //this.mergeUp();
    
    updateAvail();
  }
@@ -179,7 +179,7 @@ public class Player {
        grid[i][1] = null;
      }
      //moving down 1
-     else if (grid[i][1] != null){
+     else if (grid[i][1] != null && grid[i][2] == null){
        grid[i][1].setPosition(i, 2);
        grid[i][2] = grid[i][1];
        grid[i][1] = null;
@@ -201,7 +201,7 @@ public class Player {
        grid[i][0] = null;
      }
      //moving down 2
-     else if (grid[i][0] != null){
+     else if (grid[i][0] != null && grid[i][1] == null && grid[i][2] == null){
        grid[i][0].setPosition(i, 2);
        grid[i][2] = grid[i][0];
        grid[i][0] = null;
@@ -232,7 +232,7 @@ public class Player {
        grid[2][i] = null;
      }
      //moving left 1
-     else if (grid[2][i] != null){
+     else if (grid[2][i] != null && grid[1][i] == null){
        grid[2][i].setPosition(1, i);
        grid[1][i] = grid[2][i];
        grid[2][i] = null;
@@ -254,7 +254,7 @@ public class Player {
        grid[3][i] = null;
      }
      //moving left 2
-     else if (grid[3][i] != null){
+     else if (grid[3][i] != null && grid[2][i] == null && grid[1][1] == null){
        grid[3][i].setPosition(1, i);
        grid[1][i] = grid[3][i];
        grid[3][i] = null;
@@ -287,7 +287,7 @@ public class Player {
        grid[1][i] = null;
      }
      //moving right 1
-     else if (grid[1][i] != null){
+     else if (grid[1][i] != null && grid[2][i] == null){
        grid[1][i].setPosition(2, i);
        grid[2][i] = grid[1][i];
        grid[1][i] = null;
@@ -309,7 +309,7 @@ public class Player {
        grid[0][i] = null;
      }
      //moving right 2
-     else if (grid[0][i] != null){
+     else if (grid[0][i] != null && grid[1][i] == null && grid[2][i] == null){
        grid[0][i].setPosition(2, i);
        grid[2][i] = grid[0][i];
        grid[0][i] = null;
