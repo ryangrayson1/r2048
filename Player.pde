@@ -238,7 +238,7 @@ public class Player {
      }
        
      //3 single merge cases
-     //merge top 2
+     //merge bottom 2
      else if (grid[i][3] != null && grid[i][2] != null && grid[i][3].getValue() == grid[i][2].getValue()){
        grid[i][3].nextValue();
        
@@ -273,7 +273,7 @@ public class Player {
          grid[i][0] = null;
        }
      }
-     //merge bottom 2
+     //merge top 2
      else if (grid[i][1] != null && grid[i][0] != null && grid[i][1].getValue() == grid[i][0].getValue()){
        grid[i][1].nextValue();
        grid[i][0] = null;
@@ -331,10 +331,69 @@ public class Player {
        
    }
    //merging tiles
-   //this.mergeLeft();
+   this.mergeLeft();
    
    updateAvail();
  }
+ 
+ 
+public void mergeLeft(){
+  for(int i = 0; i < 4; i++){
+     
+     //double merge case
+     if (grid[0][i] != null && grid[1][i] != null && grid[2][i] != null && grid[3][i] != null && grid[0][i].getValue() == grid[1][i].getValue() && grid[2][i].getValue() == grid[3][i].getValue()){
+       grid[0][i].nextValue();
+       
+       grid[2][i].nextValue();
+       grid[2][i].setPosition(1, i);
+       grid[1][i] = grid[2][i];
+       
+       grid[2][i] = null;
+       grid[3][i] = null;  
+     }
+       
+     //3 single merge cases
+     //merge left 2
+     else if (grid[0][i] != null && grid[1][i] != null && grid[0][i].getValue() == grid[1][i].getValue()){
+       grid[0][i].nextValue();
+       
+       if (grid[2][i] == null && grid[3][i] == null){
+         grid[1][i] = null;
+       }
+       else if (grid[2][i] != null){
+         grid[2][i].setPosition(1, i);
+         grid[1][i] = grid[2][i];
+         
+         if (grid[3][i] == null){
+           grid[2][i] = null;
+         }
+         else{
+           grid[2][i] = grid[3][i];
+           grid[2][i].setPosition(2, i);
+           grid[3][i] = null;
+         }
+       }
+     }
+     //merge middle 2
+     if (grid[1][i] != null && grid[2][i] != null && grid[1][i].getValue() == grid[2][i].getValue()){
+       grid[1][i].nextValue();
+       
+       if (grid[3][i] == null){
+         grid[2][i] = null;
+       }
+       else{
+         grid[2][i] = grid[3][i];
+         grid[2][i].setPosition(2, i);
+         grid[3][i] = null;
+       }
+     }
+     //merge right 2
+     else if (grid[2][i] != null && grid[3][i] != null && grid[2][i].getValue() == grid[3][i].getValue()){
+       grid[2][i].nextValue();
+       grid[3][i] = null;
+     }
+   }
+}
  
 //MOVE RIGHT ------------------------------------------------------------------------------------------------------------
  public void moveRight(){
@@ -386,9 +445,67 @@ public class Player {
        
    }
    //merging tiles
-   //this.mergeRight();
+   this.mergeRight();
    
    updateAvail();
+ }
+ 
+ public void mergeRight(){
+   for(int i = 0; i < 4; i++){
+     
+     //double merge case
+     if (grid[3][i] != null && grid[2][i] != null && grid[1][i] != null && grid[0][i] != null && grid[3][i].getValue() == grid[2][i].getValue() && grid[1][i].getValue() == grid[0][i].getValue()){
+       grid[3][i].nextValue();
+       
+       grid[1][i].nextValue();
+       grid[1][i].setPosition(2, i);
+       grid[2][i] = grid[1][i];
+       
+       grid[1][i] = null;
+       grid[0][i] = null;  
+     }
+       
+     //3 single merge cases
+     //merge right 2
+     else if (grid[3][i] != null && grid[2][i] != null && grid[3][i].getValue() == grid[2][i].getValue()){
+       grid[3][i].nextValue();
+       
+       if (grid[1][i] == null && grid[0][i] == null){
+         grid[2][i] = null;
+       }
+       else if (grid[2][i] != null){
+         grid[1][i].setPosition(2, i);
+         grid[2][i] = grid[1][i];
+         
+         if (grid[0][i] == null){
+           grid[1][i] = null;
+         }
+         else{
+           grid[1][i] = grid[0][i];
+           grid[1][i].setPosition(1, i);
+           grid[0][i] = null;
+         }
+       }
+     }
+     //merge middle 2
+     if (grid[2][i] != null && grid[1][i] != null && grid[2][i].getValue() == grid[1][i].getValue()){
+       grid[2][i].nextValue();
+       
+       if (grid[0][i] == null){
+         grid[1][i] = null;
+       }
+       else{
+         grid[1][i] = grid[0][i];
+         grid[1][i].setPosition(1, i);
+         grid[0][i] = null;
+       }
+     }
+     //merge left 2
+     else if (grid[1][i] != null && grid[0][i] != null && grid[1][i].getValue() == grid[0][i].getValue()){
+       grid[1][i].nextValue();
+       grid[0][i] = null;
+     }
+   }
  }
    
  public void updateAvail(){
