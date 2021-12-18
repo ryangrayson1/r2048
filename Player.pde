@@ -217,12 +217,68 @@ public class Player {
      }
        
    }
-   //this.mergeDown();
+   this.mergeDown();
    updateAvail();
  }
  
  //merging tiles up after they have moved
- public void mergeDown(){    
+ public void mergeDown(){
+   for(int i = 0; i < 4; i++){
+     
+     //double merge case
+     if (grid[i][3] != null && grid[i][2] != null && grid[i][1] != null && grid[i][0] != null && grid[i][3].getValue() == grid[i][2].getValue() && grid[i][1].getValue() == grid[i][0].getValue()){
+       grid[i][3].nextValue();
+       
+       grid[i][1].nextValue();
+       grid[i][1].setPosition(i, 2);
+       grid[i][2] = grid[i][1];
+       
+       grid[i][1] = null;
+       grid[i][0] = null;  
+     }
+       
+     //3 single merge cases
+     //merge top 2
+     else if (grid[i][3] != null && grid[i][2] != null && grid[i][3].getValue() == grid[i][2].getValue()){
+       grid[i][3].nextValue();
+       
+       if (grid[i][1] == null && grid[i][0] == null){
+         grid[i][2] = null;
+       }
+       else if (grid[i][1] != null){
+         grid[i][1].setPosition(i, 2);
+         grid[i][2] = grid[i][1];
+         
+         if (grid[i][0] == null){
+           grid[i][1] = null;
+         }
+         else{
+           grid[i][1] = grid[i][0];
+           grid[i][1].setPosition(i, 1);
+           grid[i][0] = null;
+         }
+       }
+     }
+     //merge middle 2
+     if (grid[i][2] != null && grid[i][1] != null && grid[i][2].getValue() == grid[i][1].getValue()){
+       grid[i][2].nextValue();
+       
+       
+       if (grid[i][0] == null){
+         grid[i][1] = null;
+       }
+       else{
+         grid[i][1] = grid[i][0];
+         grid[i][1].setPosition(i, 1);
+         grid[i][0] = null;
+       }
+     }
+     //merge bottom 2
+     else if (grid[i][1] != null && grid[i][0] != null && grid[i][1].getValue() == grid[i][0].getValue()){
+       grid[i][1].nextValue();
+       grid[i][0] = null;
+     }
+   }
  }
  
 //MOVE LEFT ------------------------------------------------------------------------------------------------------------
