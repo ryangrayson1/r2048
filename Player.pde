@@ -30,7 +30,7 @@ public class Player {
   
   public void addTile(){
      if (available.size() == 0){
-       gameActive = false;
+       //gameActive = false;
      }
      else{
       //getting a random available space and making that space unavailable

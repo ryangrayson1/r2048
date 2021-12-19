@@ -15,6 +15,11 @@ public PVector pixCoords(int x, int y){
 }
 
 void draw(){
+  if (simActive){
+    
+    //run sim
+    
+  }
   //menu screen
   if (!gameActive){
     int clr = 0;
